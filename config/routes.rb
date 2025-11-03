@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   root to: "pages#home"
-  get "about", to: "pages#about"
+  get "moi", to: "pages#me", as: "me"
+  get "projets", to: "pages#project", as: "project"
+  get "services", to: "pages#service", as: "service"
+  get "contact", to: "pages#about", as: "contact"
 end
-
