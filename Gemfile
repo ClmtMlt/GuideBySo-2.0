@@ -1,6 +1,12 @@
 source "https://rubygems.org"
 
 ruby "3.1.2"
+gem "sassc-rails"
+gem "bootstrap", "~> 5.3"
+gem "font-awesome-sass", "~> 6.1"
+gem "simple_form"
+
+gem "autoprefixer-rails"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.5", ">= 7.1.5.1"
@@ -66,4 +72,9 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+end
+
+group :development do
+  # [...]
+  gem "hotwire-livereload"
 end
