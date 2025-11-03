@@ -11,6 +11,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "shared/intro_loader" %>
+
+    <%= render 'shared/navbar' %>
+    
+    <main id="main-content" class="invisible-content">
+      <%= yield %>
+    </main>
   </body>
 </html>

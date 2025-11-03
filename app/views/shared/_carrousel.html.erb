@@ -1,0 +1,21 @@
+<div id="mediaCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <% @medias.each_with_index do |media, i| %>
+      <div class="carousel-item <%= 'active' if i.zero? %>">
+        <% if media.video? %>
+          <video class="d-block w-100" controls>
+            <source src="<%= media.url %>" type="video/mp4">
+          </video>
+        <% else %>
+          <img src="<%= media.url %>" class="d-block w-100" alt="Media <%= i+1 %>">
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#mediaCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#mediaCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>

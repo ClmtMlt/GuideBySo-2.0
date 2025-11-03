@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Intro GUIDEBYSO</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: sans-serif;
+    }
+
+    #intro-loader {
+      position: fixed;
+      inset: 0;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      overflow: hidden;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    #intro-loader .intro-text {
+      color: #fff;
+      font-weight: 700;
+      z-index: 2;
+      position: relative;
+      transition: color 1s ease, transform 1s ease, top 1s ease, left 1s ease;
+      text-align: center;
+      line-height: 1.2;
+      font-size: clamp(2rem, 8vw, 4rem);
+    }
+
+    #intro-loader .intro-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: #fff;
+      z-index: 1;
+      transition: width 1.5s ease;
+    }
+
+    #intro-loader.filled .intro-overlay { width: 100%; }
+    #intro-loader.filled .intro-text { color: #000; }
+
+    #intro-loader.zoomed .intro-text {
+      transform: scale(6);
+      opacity: 0;
+    }
+
+    #intro-loader.move-up .intro-text {
+      position: absolute;
+      top: 16px;
+      left: 24px;
+      transform: scale(1);
+    }
+
+    #intro-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    #main-content {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    #main-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="intro-loader">
+    <div class="intro-overlay"></div>
+    <h1 class="intro-text">GUIDEBYSO</h1>
+  </div>
+
+  <main id="main-content">
+    <h2 style="text-align:center; margin-top:40vh;">Bienvenue sur le site 🎉</h2>
+  </main>
+
+  <script>
+    const loader = document.getElementById("intro-loader")
+    const mainContent = document.getElementById("main-content")
+
+    setTimeout(() => loader.classList.add("filled"), 1000)
+    setTimeout(() => loader.classList.add("zoomed"), 2500)
+    setTimeout(() => {
+      loader.classList.remove("zoomed")
+      loader.classList.add("move-up")
+    }, 3100)
+    setTimeout(() => loader.classList.add("hidden"), 4200)
+    setTimeout(() => mainContent.classList.add("visible"), 4600)
+  </script>
+</body>
+</html>
