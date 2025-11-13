@@ -1,18 +1,18 @@
-<nav id="main-navbar" class="navbar navbar-expand-lg bg-white fixed-top px-4 py-3 hidden-navbar">
+<nav id="main-navbar" class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <span id="navbar-logo" class="fw-bold fs-4 opacity-0 transition">GUIDEBYSO</span>
+  
+    <h1><%= link_to "GuideBySO", root_path, class: "nav-link" %></h1>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item"><%= link_to "Accueil", root_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to "À propos", root_path, class: "nav-link" %></li>
-        <li class="nav-item"><%= link_to "Contact", root_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "À propos", me_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "Contact", me_path, class: "nav-link" %></li>
       </ul>
     </div>
   </div>
 </nav>
-

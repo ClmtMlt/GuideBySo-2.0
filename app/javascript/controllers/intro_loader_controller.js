@@ -1,71 +1,67 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connecté à data-controller="intro-loader"
-
-
 export default class extends Controller {
   connect() {
-    console.log("✅ intro-loader connecté !") // ← ajoute ceci
-    // Assure que l’animation se lance seulement quand Turbo a fini de charger la page
+    this.init()
     document.addEventListener("turbo:load", () => this.init())
   }
 
   init() {
-    console.log("🚀 intro-loader init lancé !") // ← ajoute ceci
     const loader = this.element
-    const navbar = document.querySelector("#main-navbar")
-    const navbarLogo = document.querySelector("#navbar-logo")
     const mainContent = document.querySelector("#main-content")
 
     const isMobile = window.matchMedia("(max-width: 768px)").matches
     const baseDelay = isMobile ? 600 : 1000
 
-    // ⚡️ Si déjà joué → skip instantané
     if (sessionStorage.getItem("introPlayed")) {
-      this.skipIntro(loader, navbar, navbarLogo, mainContent)
+      this.removeBlackOverlays()
       return
     }
 
-    // Affiche le loader plein écran au départ
     loader.classList.remove("hidden")
 
-    // Joue l’animation
-    this.playIntro(loader, navbar, navbarLogo, mainContent, baseDelay)
+    // Barre de remplissage et changement couleur texte
+    setTimeout(() => loader.classList.add("filled"), baseDelay)
 
-    // Marque comme joué
+    // Fin de l’animation → suppression complète
+    setTimeout(() => {
+      this.removeBlackOverlays()
+    }, baseDelay + 2000)
+
+    setTimeout(() => mainContent.classList.add("visible"), baseDelay + 2300)
+
     sessionStorage.setItem("introPlayed", "true")
-  }
-
-  playIntro(loader, navbar, navbarLogo, mainContent, delay) {
-    setTimeout(() => loader.classList.add("filled"), delay)
-    setTimeout(() => loader.classList.add("zoomed"), delay + 1500)
-    setTimeout(() => {
-      loader.classList.remove("zoomed")
-      loader.classList.add("move-up")
-    }, delay + 2100)
-    setTimeout(() => {
-      navbarLogo?.classList.remove("opacity-0")
-      navbarLogo?.classList.add("opacity-100")
-      loader.classList.add("hidden")
-    }, delay + 3200)
-    setTimeout(() => mainContent.classList.add("visible"), delay + 3700)
   }
 
   skip() {
-    const loader = this.element
-    const navbar = document.querySelector("#main-navbar")
+    sessionStorage.setItem("introPlayed", "true")
+    this.removeBlackOverlays()
+  }
+
+  removeBlackOverlays() {
+    // Supprime tous les éléments fullscreen noirs
+    const elems = [...document.querySelectorAll("body *")].filter(el => {
+      const rect = el.getBoundingClientRect()
+      const bg = getComputedStyle(el).backgroundColor
+      const z = parseInt(getComputedStyle(el).zIndex) || 0
+      return rect.width >= window.innerWidth && rect.height >= window.innerHeight &&
+             (bg === "rgb(0, 0, 0)" || bg === "black") && z > 0
+    })
+    elems.forEach(el => el.remove())
+
+    // Navbar et contenu
     const navbarLogo = document.querySelector("#navbar-logo")
+    const navbar = document.querySelector("#main-navbar")
     const mainContent = document.querySelector("#main-content")
 
-    this.skipIntro(loader, navbar, navbarLogo, mainContent)
-    sessionStorage.setItem("introPlayed", "true")
-  }
-
-  skipIntro(loader, navbar, navbarLogo, mainContent) {
-    loader.classList.add("hidden")
     navbarLogo?.classList.remove("opacity-0")
     navbarLogo?.classList.add("opacity-100")
-    mainContent.classList.add("visible")
-  }
+    navbar?.classList.add("visible-navbar")
+    mainContent?.classList.add("visible")
 
+    // ⚡ Forcer le fond blanc sur le body et le html
+    document.body.style.backgroundColor = "#fff"
+    document.body.style.transition = "background-color 0.3s ease"
+    document.documentElement.style.backgroundColor = "#fff"
+  }
 }

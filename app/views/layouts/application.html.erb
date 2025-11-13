@@ -13,10 +13,12 @@
   <body>
     <%= render "shared/intro_loader" %>
 
-    <%= render 'shared/navbar' %>
-    
-    <main id="main-content" class="invisible-content">
+    <%= render "shared/navbar" %>
+
+    <main id="main-content" class="invisible-content" data-controller="page-transition">
       <%= yield %>
     </main>
+
+    <div id="page-transition-overlay" aria-hidden="true"></div>
   </body>
 </html>
